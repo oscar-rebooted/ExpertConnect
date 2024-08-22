@@ -48,18 +48,12 @@ CREATE TABLE IF NOT EXISTS guidepoint_data (
 
 -- Aggregated experts table
 CREATE TABLE IF NOT EXISTS aggregated_experts (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    source TEXT,
-    source_id TEXT,
+    id INTEGER PRIMARY KEY,
+    network TEXT,
     name TEXT,
     title TEXT,
     organization TEXT,
     country TEXT,
-    linkedin_url TEXT,
-    bio TEXT,
-    last_updated DATETIME,
-    UNIQUE(source, source_id)
+    experience TEXT, -- SQLite does not JSON data type
+    last_updated DATETIME
 );
-
--- Index for faster queries on the aggregated table
-CREATE INDEX IF NOT EXISTS idx_aggregated_experts_source ON aggregated_experts(source, source_id);
