@@ -1,0 +1,35 @@
+{
+  "name": "expertconnect",
+  "version": "1.0.0",
+  "description": "A portal for consultants on commercial due diligences",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "keywords": [],
+  "author": "Oscar",
+  "dependencies": {
+    "axios": "^1.7.3",
+    "better-sqlite3": "^11.1.2"
+  },
+  "devDependencies": {
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.local.expertconnect",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

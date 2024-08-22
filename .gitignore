@@ -1,0 +1,9 @@
+# Node.js dependencies
+node_modules/
+
+# Build output
+dist/
+misc/
+
+# SQLite database file
+db.sqlite
