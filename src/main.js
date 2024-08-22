@@ -4,14 +4,12 @@ const Database = require('better-sqlite3');
 const fs = require('fs');
 
 let db;
-const userDataPath = "C:\Users\oscar_0qiqt8o\.vscode\ExpertConnect\ "; // Get the user data path
+const userDataPath = "C:\\Users\\oscar_0qiqt8o\\.vscode\\ExpertConnect\\db\\"; // Get the user data path
 const dbName = 'db.sqlite';
 const dbPath = path.join(userDataPath, dbName); // Use a writable directory for the database
-// const dbPath = 'C:\Users\oscar_0qiqt8o\.vscode\ExpertConnect\db.sqlite'
 
 function initDatabase() {
     console.log("Initializing database...");
-    console.log("Database path:", dbPath);
 
     if (fs.existsSync(dbPath)) {
         console.log("Existing database found");
@@ -20,10 +18,10 @@ function initDatabase() {
     }
 
     try {
-        db = new Database(dbName);
+        db = new Database(dbPath);
         console.log("Database connection established");
 
-        const schemaPath = path.join(__dirname, 'schema.sql');
+        const schemaPath = path.join(__dirname, '..', 'db', 'schema.sql');
         console.log("Schema path:", schemaPath);
 
         if (fs.existsSync(schemaPath)) {
@@ -44,13 +42,16 @@ function createWindow() {
         width: 1200,
         height: 800,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
-            contextIsolation: true,
-            enableRemoteModule: false
+            // preload: path.join(__dirname, 'preload.js'),
+            // contextIsolation: true,
+            // enableRemoteModule: false,
+            nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true
         }
     });
 
-    mainWindow.loadFile('index.html');
+    mainWindow.loadFile('./public/index.html');
 
     mainWindow.on('closed', function () {
         if (db) db.close();

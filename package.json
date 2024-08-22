@@ -2,20 +2,38 @@
   "name": "expertconnect",
   "version": "1.0.0",
   "description": "A portal for consultants on commercial due diligences",
-  "main": "main.js",
+  "main": "./src/main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "build:css": "npx tailwindcss -i ./src/styles.css -o ./public/output.css",
+    "build:tsx": "npx babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline"
   },
   "keywords": [],
   "author": "Oscar",
   "dependencies": {
+    "@radix-ui/react-checkbox": "^1.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
     "axios": "^1.7.3",
-    "better-sqlite3": "^11.1.2"
+    "better-sqlite3": "^11.1.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.429.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@babel/cli": "^7.24.8",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-react": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
     "electron": "^31.3.1",
-    "electron-builder": "^24.13.3"
+    "electron-builder": "^24.13.3",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10"
   },
   "build": {
     "appId": "com.local.expertconnect",
