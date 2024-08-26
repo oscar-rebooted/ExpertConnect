@@ -1,12 +1,13 @@
 console.log("renderer.js has been found")
 
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Component = require('../dist/v0.js');
-// const Component = require('../src/v0.jsx');
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App';
 
-// Render the React component into the #root element
-ReactDOM.render(React.createElement(Component), document.getElementById('root'));
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find the root element');
+const root = createRoot(rootElement);
+root.render(<React.StrictMode><App /></React.StrictMode>);
 
 // function openTab(evt, networkName) {
 //     var i, tabcontent, tablinks;
