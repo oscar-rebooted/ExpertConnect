@@ -4,6 +4,7 @@ node_modules/
 # Build output
 dist/
 dist_old/
+dist_tsx/
 misc/
 
 # SQLite database file

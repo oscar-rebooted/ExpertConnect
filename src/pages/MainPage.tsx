@@ -5,7 +5,7 @@ const MainPage: React.FC = () => {
   return (
     <div>
       <h1>Main Page</h1>
-      <Button variant="default" size="default" onClick={() => alert('Clicked!')}>
+      <Button variant="destructive" onClick={() => alert('Clicked!')}>
         Click Me
       </Button>
     </div>

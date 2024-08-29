@@ -9,7 +9,7 @@
     "jsx": "react",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "outDir": "./dist",  // Output directory for compiled JS files
+    "outDir": "./dist_tsx",  // Output directory for compiled JS files
     "rootDir": "./src"   // Root directory for your TypeScript source files
     },
     "include": ["src/**/*"],  // Specifies the files to be included in the compilation
