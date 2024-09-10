@@ -1,6 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';  /* Add this line */
+@import 'tailwindcss/components';  /* Add this line */
+@import 'tailwindcss/utilities';  /* Add this line */
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
 
 @layer base {
   :root {
@@ -34,6 +41,8 @@
     --ring: 215 20.2% 65.1%;
 
     --radius: 0.5rem;
+
+    --font-sans: 'Inter', sans-serif;  /* Or another font-family of your choice */
   }
 
   .dark {
@@ -67,6 +76,8 @@
     --ring: 216 34% 17%;
 
     --radius: 0.5rem;
+
+    --font-sans: 'Inter', sans-serif;  /* Or another font-family of your choice */
   }
 }
 

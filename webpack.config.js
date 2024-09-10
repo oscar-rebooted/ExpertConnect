@@ -21,6 +21,14 @@ module.exports = {
         exclude: /node_modules/,
         use: 'ts-loader',
       },
+      {
+        test: /\.css$/, // Handles CSS files
+        use: [
+          'style-loader', // Injects CSS into the DOM
+          'css-loader',   // Translates CSS into CommonJS modules
+          'postcss-loader', // Processes CSS with PostCSS (and Tailwind)
+        ],
+      },
     ],
   },
   devServer: {

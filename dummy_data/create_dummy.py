@@ -19,6 +19,7 @@ def create_experience():
 # List of possible networks, countries, and organizations
 networks = ["AlphaSights", "Dialectica", "Guidepoint", "Third Bridge"]
 countries = ["United States", "Austria", "Japan", "Italy", "Germany", "France", "Canada", "United Kingdom", "Australia", "Switzerland", "Spain", "Portugal", "Belgium", "Netherlands", "Sweden", "Norway", "Denmark", "Finland", "Iceland", "Ireland", "Malta", "Cyprus", "Luxembourg"]
+perspective = ["Customer", "Competitor", "Former"]
 
 # Generate 50 new rows
 new_rows = []
@@ -26,6 +27,7 @@ for _ in range(250):
     new_rows.append({
         "id": random.randint(1, 99999),
         "network": random.choice(networks),
+        "perspective": random.choice(perspective),
         "name": fake.name(),
         "title": fake.job(),
         "organization": fake.company(),

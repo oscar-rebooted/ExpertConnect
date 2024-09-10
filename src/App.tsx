@@ -1,9 +1,10 @@
 import React from 'react';
-import MainPage from './pages/MainPage';
+import ProjectPage from './pages/ProjectPage';
+import './styles/global.css'
 
 const App: React.FC = () => {
   return (
-    <MainPage />
+    <ProjectPage />
   );
 };
 
