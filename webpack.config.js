@@ -29,6 +29,18 @@ module.exports = {
           'postcss-loader', // Processes CSS with PostCSS (and Tailwind)
         ],
       },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,  // Regular expression to match image file types
+        use: [
+          {
+            loader: 'file-loader',  // Use file-loader to handle image files
+            options: {
+              name: '[path][name].[ext]',  // Keep the file name and extension
+              outputPath: 'assets/',  // Output directory for the images
+            },
+          },
+        ],
+      },
     ],
   },
   devServer: {

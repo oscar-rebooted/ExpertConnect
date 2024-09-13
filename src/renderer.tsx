@@ -1,5 +1,3 @@
-console.log("renderer.js has been found")
-
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
