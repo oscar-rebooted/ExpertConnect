@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { format, isBefore, startOfDay } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Button } from "@/components/ui/Button"
+import { Label } from "@/components/ui/Label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
 import {
   Dialog,
   DialogContent,
@@ -11,13 +11,13 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
-} from "@/components/ui/dialog"
-import { Calendar } from "@/components/ui/calendar"
+} from "@/components/ui/Dialog"
+import { Calendar } from "@/components/ui/Calendar"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/Popover"
 
 type Expert = {
   id: number;

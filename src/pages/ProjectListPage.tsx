@@ -2,15 +2,15 @@ import React from 'react'
 import { useState } from 'react'
 // import { useRouter } from 'next/navigation'
 import { useNavigate } from 'react-router-dom'
-import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
+import { Card, CardContent } from "@/components/ui/Card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
+import { Label } from "@/components/ui/Label"
 import { PlusCircle, ChevronDown, ChevronUp, Network, Bot, Building2, PieChart } from 'lucide-react'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { Button } from "@/components/ui/button"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/Collapsible"
+import { Button } from "@/components/ui/Button"
 import { DialogTrigger } from '@radix-ui/react-dialog'
-import { DialogHeader, DialogTitle, Dialog, DialogFooter, DialogContent } from '@/components/ui/dialog'
-import { Input } from "@/components/ui/input"
+import { DialogHeader, DialogTitle, Dialog, DialogFooter, DialogContent } from '@/components/ui/Dialog'
+import { Input } from "@/components/ui/Input"
 
 // Mock data for projects
 const projects = [
