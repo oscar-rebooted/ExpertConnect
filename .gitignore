@@ -1,0 +1,14 @@
+# Node.js dependencies
+node_modules/
+
+# Build output
+dist/
+dist_old/
+dist_tsx/
+misc/
+
+# SQLite database file
+db.sqlite
+
+# venv
+venv/
