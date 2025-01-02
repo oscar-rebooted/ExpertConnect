@@ -15,8 +15,8 @@ root.render(
   <React.StrictMode>
     <Router basename={basename}>
       <Routes>
-        {/* <Route path="/" element={<Navigate to="/project/1" replace />} /> */}
-        <Route path="/" element={<ProjectPage />} />        
+        <Route path="/" element={<Navigate to="/project/1" replace />} />
+        {/* <Route path="/" element={<ProjectPage />} />         */}
         <Route path="/project-list" Component={ProjectListPage} />
         <Route path="/project/1" element={<ProjectPage />} />        
       </Routes>
