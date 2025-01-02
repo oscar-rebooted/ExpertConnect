@@ -5,7 +5,7 @@ module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
 
   return {
-    entry: './src/renderer.tsx',
+    entry: './src/App.tsx',
     target: 'web', // Specify Electron as the target environment
     resolve: {
       alias: {
@@ -61,6 +61,7 @@ module.exports = (env, argv) => {
     plugins: [
       new HtmlWebpackPlugin({
         template: './public/index.html',
+        inject: "body"
       }),
     ],  
   };
