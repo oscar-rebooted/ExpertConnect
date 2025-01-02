@@ -25,6 +25,7 @@ import { Link } from 'react-router-dom'
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/Dialog';
 import { Label } from "@/components/ui/Label";
 import SchedulingDialog from '@/components/SchedulingDialog'
+import SidebarFilter from '@/components/SidebarFilter';
 
 const networks = ["AlphaSights", "Dialectica", "Guidepoint"]
 const countries = ["United States", "Austria", "Japan", "Italy", "Germany", "France", "Canada", "United Kingdom", "Australia", "Switzerland", "Spain", "Portugal", "Belgium", "Netherlands", "Sweden", "Norway", "Denmark", "Finland", "Iceland", "Ireland", "Malta", "Cyprus", "Luxembourg"]
@@ -233,50 +234,20 @@ export default function ProjectPage() {
 
       {/* Main content */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
-        <div className={`bg-white dark:bg-gray-800 p-4 transition-all duration-300 ease-in-out ${isFiltersExpanded ? 'w-64' : 'w-16'} overflow-hidden relative`}>
-          <Button 
-            variant="ghost" 
-            className="w-full justify-start mb-4" 
-            onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
-          >
-            <FilterIcon className="h-4 w-4 mr-2" />
-            {isFiltersExpanded && 'Filters'}
-          </Button>
-          {isFiltersExpanded && (
-            <div className="space-y-4">
-              {['network', 'country', 'perspective'].map((category) => (
-                <div key={category}>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-between mb-2"
-                    onClick={() => toggleFilterExpansion(category as 'network' | 'country' | 'perspective')}
-                  >
-                    <span className="font-semibold capitalize">{category}</span>
-                    <ChevronDownIcon className={`h-4 w-4 transition-transform ${expandedFilters[category as keyof typeof expandedFilters] ? 'rotate-180' : ''}`} />
-                  </Button>
-                  {expandedFilters[category as keyof typeof expandedFilters] && (
-                    <div className="space-y-1 ml-4">
-                      {(category === 'network' ? networks : category === 'country' ? countries : perspectives).map((item) => (
-                        <FilterCheckbox key={item} id={item} label={item} category={category as 'network' | 'country' | 'perspective'} />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute bottom-4 right-4"
-            onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
-          >
-            <ChevronRightIcon className={`h-4 w-4 transition-transform ${isFiltersExpanded ? 'rotate-180' : ''}`} />
-          </Button>
-        </div>
+        <SidebarFilter
+          isFiltersExpanded={isFiltersExpanded}
+          setIsFiltersExpanded={setIsFiltersExpanded}
+          expandedFilters={expandedFilters} 
+          setExpandedFilters={setExpandedFilters}
+          toggleFilterExpansion={toggleFilterExpansion} 
+          networks={networks}
+          countries={countries}
+          perspectives={perspectives}
+          filters={filters}
+          setFilters={setFilters}
+          handleFilterChange={handleFilterChange}
+        />     
 
-        {/* Table content */}
         <div className="flex-1 p-8 overflow-auto">
           <div className="flex justify-between items-center mb-6">
             <Input
@@ -384,6 +355,8 @@ export default function ProjectPage() {
               </Dialog>
             </div>
           </div>
+
+        {/* Table content */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
             <Table>
               <TableHeader>

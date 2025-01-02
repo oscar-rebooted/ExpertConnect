@@ -9,12 +9,14 @@ const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Failed to find the root element');
 const root = createRoot(rootElement);
 
+const basename = process.env.NODE_ENV === 'production' ? '/ExpertConnect' : '/';
+
 root.render(
   <React.StrictMode>
-    <Router basename='/ExpertConnect'>
+    <Router basename={basename}>
       <Routes>
-        {/* <Route path="/" element={<Navigate to="/project-list" />} /> */}
-        <Route path="/" Component={ProjectListPage} />
+        {/* <Route path="/" Component={ProjectListPage} /> */}
+        <Route path="/" Component={ProjectPage} />
         <Route path="/project-list" Component={ProjectListPage} />
         <Route path="/project/1" element={<ProjectPage />} />        
       </Routes>
