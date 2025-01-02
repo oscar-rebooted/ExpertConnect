@@ -19,7 +19,6 @@ interface SidebarFilterProps {
     filters: { network: string[]; country: string[]; perspective: string[] };
     setFilters: React.Dispatch<React.SetStateAction<{ network: string[]; country: string[]; perspective: string[] }>>;
     handleFilterChange: (category: 'network' | 'country' | 'perspective', value: string) => void;
-  
 }
 
 const FilterCheckbox = ({ id, label, category, filters, handleFilterChange }: { 

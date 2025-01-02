@@ -13,17 +13,11 @@ import {
 } from "@/components/ui/Table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
 import { 
-  CalendarIcon, 
-  FilterIcon, 
   ChevronLeftIcon, 
   ChevronDownIcon, 
   ChevronUpIcon, 
-  ChevronRightIcon,
-  PlusIcon 
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/Dialog';
-import { Label } from "@/components/ui/Label";
+import { Link, useFetcher } from 'react-router-dom'
 import SchedulingDialog from '@/components/SchedulingDialog'
 import SidebarFilter from '@/components/SidebarFilter'
 import AddConnectionDialog from '@/components/AddConnectionDialog'
@@ -31,6 +25,18 @@ import AddConnectionDialog from '@/components/AddConnectionDialog'
 const networks = ["AlphaSights", "Dialectica", "Guidepoint"]
 const countries = ["United States", "Austria", "Japan", "Italy", "Germany", "France", "Canada", "United Kingdom", "Australia", "Switzerland", "Spain", "Portugal", "Belgium", "Netherlands", "Sweden", "Norway", "Denmark", "Finland", "Iceland", "Ireland", "Malta", "Cyprus", "Luxembourg"]
 const perspectives = ["Customer", "Competitor", "Former"]
+
+type Experience = {
+  id: string;
+  title: string;
+  company: string;
+  duration: string;
+};
+
+type AvailabilityBlock = {
+  day: string;
+  slots: string[];
+};
 
 type Expert = {
   id: number;
@@ -41,16 +47,8 @@ type Expert = {
   country: string;
   perspective: string;
   availability: string;
-  experience: {
-    id: string;
-    title: string;
-    company: string;
-    duration: string;
-  }[];
-  availabilityBlocks: {
-    day: string;
-    slots: string[];
-  }[];
+  experience: Experience[];
+  availabilityBlocks: AvailabilityBlock[];
 }
 
 // Sample data
@@ -99,8 +97,7 @@ type SortConfig = {
 }
 
 export default function ProjectPage() {
-  const [experts, setExperts] = useState<Expert[]>(sampleExperts)
-  const [filteredExperts, setFilteredExperts] = useState<Expert[]>(sampleExperts)
+  const [filteredExperts, setFilteredExperts] = useState<Expert[]>(sampleExperts);
   const [expandedRow, setExpandedRow] = useState<number | null>(null)
   const [filters, setFilters] = useState({
     network: [] as string[],
@@ -116,8 +113,17 @@ export default function ProjectPage() {
     perspective: false,
   })
 
+  // useEffect(() => {
+  //   // Fetch the JSON data
+  //   fetch('https://yourusername.github.io/yourrepo/experts.json')  // Replace with the actual URL of the JSON
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setFilteredExperts(data);  // Directly use the JSON data
+  //     });
+  // }, []);
+
   useEffect(() => {
-    let result = experts.filter(expert => 
+    let result = filteredExperts.filter(expert => 
       (filters.network.length === 0 || filters.network.includes(expert.network)) &&
       (filters.country.length === 0 || filters.country.includes(expert.country)) &&
       (filters.perspective.length === 0 || filters.perspective.includes(expert.perspective)) &&
@@ -139,7 +145,7 @@ export default function ProjectPage() {
     }
 
     setFilteredExperts(result)
-  }, [filters, experts, searchTerm, sortConfig])
+  }, [filters, filteredExperts, searchTerm, sortConfig])
 
   const toggleRowExpansion = (id: number) => {
     setExpandedRow(expandedRow === id ? null : id)
@@ -170,19 +176,6 @@ export default function ProjectPage() {
   const toggleFilterExpansion = (category: 'network' | 'country' | 'perspective') => {
     setExpandedFilters(prev => ({ ...prev, [category]: !prev[category] }))
   }
-
-  const FilterCheckbox = ({ id, label, category }: { id: string; label: string; category: 'network' | 'country' | 'perspective' }) => (
-    <div className="flex items-center space-x-2">
-      <Checkbox 
-        id={id} 
-        checked={filters[category].includes(label)}
-        onCheckedChange={() => handleFilterChange(category, label)}
-      />
-      <label htmlFor={id} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-        {label}
-      </label>
-    </div>
-  )
 
   // Copied in from ChatGPT: pop-up form logic
   const SortIcon = ({ columnKey }: { columnKey: keyof Expert }) => {
