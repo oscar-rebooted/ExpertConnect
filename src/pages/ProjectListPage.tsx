@@ -26,12 +26,16 @@ const timezones = [
 
 export default function HomePage() {
   const navigate = useNavigate()
-  const [defaultProject, setDefaultProject] = useState("1")
-  const [notificationPreference, setNotificationPreference] = useState("desktop")
   const [isPreferencesOpen, setIsPreferencesOpen] = useState(false)
+  
+  const [defaultProject, setDefaultProject] = useState("1")
+  const [notificationFrequency, setNotificationFrequency] = useState("immediate")
+  const [notificationMethod, setNotificationMethod] = useState("desktop")
 
   const handleProjectClick = (projectId: number) => {
-    navigate(`/project/${projectId}`)
+    if (projectId == 1) {
+      navigate(`/project/${projectId}`)
+    }
   }
 
   const [projectName, setProjectName] = useState('')
@@ -141,10 +145,10 @@ export default function HomePage() {
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="notification-preference" className="text-lg mb-2 block">Notification Preferences</Label>
-                  <Select value={notificationPreference} onValueChange={setNotificationPreference}>
-                    <SelectTrigger id="notification-preference">
-                      <SelectValue placeholder="Select notification preference" />
+                  <Label htmlFor="notification-frequency" className="text-lg mb-2 block">Notification Frequency</Label>
+                  <Select value={notificationFrequency} onValueChange={setNotificationFrequency}>
+                    <SelectTrigger id="notification-frequency">
+                      <SelectValue placeholder="Select notification frequency" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="daily">Daily summaries</SelectItem>
@@ -154,7 +158,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <Label htmlFor="notification-method" className="text-lg mb-2 block">Notification Method</Label>
-                  <Select defaultValue="desktop">
+                  <Select value={notificationMethod} onValueChange={setNotificationMethod}>
                     <SelectTrigger id="notification-method">
                       <SelectValue placeholder="Select notification method" />
                     </SelectTrigger>

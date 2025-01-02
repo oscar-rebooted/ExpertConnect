@@ -187,7 +187,7 @@ function SchedulingDialog({ selectedExpert, isSchedulingDialogOpen, onClose }: S
               </Button>
             </DialogFooter>
           </form>
-        ) : isReviewMode ? (
+        ) : isReviewMode && !isConfirmationMode ? (
           <div className="py-4">
             <h4 className="font-semibold mb-2">Call Details:</h4>
             <p>Date: {date ? format(date, "PPP") : "Not selected"}</p>
@@ -196,20 +196,18 @@ function SchedulingDialog({ selectedExpert, isSchedulingDialogOpen, onClose }: S
             {duration !== null && <p>Duration: {duration} minutes</p>}
             <DialogFooter className="mt-4">
               <Button type="button" onClick={handleScheduleCall}>
-                Schedule call
+                Send call request to expert
               </Button>
             </DialogFooter>
           </div>
         ) : (
           <div className="py-4">
-            <h4 className="font-semibold mb-2">Booking confirmed</h4>
-            <p>The expert network has received your request for an expert call with:</p>
-            <p className="font-semibold mt-2">{expert.name}</p>
-            <p>{expert.title} at {expert.company}</p>
+            <h4 className="font-semibold mb-2">Call request sent</h4>
+            <p>Your request has been sent to the expert network. You will receive a calendar invite when the call has been confirmed.</p>
             <p className="mt-2">Date: {date ? format(date, "PPP") : "Not selected"}</p>
             <p>Time: {startTime} - {endTime}</p>
             <DialogFooter className="mt-4">
-              <Button type="button" onClick={onClose}>
+              <Button variant="outline" onClick={onClose}>
                 Close
               </Button>
             </DialogFooter>

@@ -34,113 +34,113 @@ const AddConnectionDialog: React.FC<AddConnectionDialogProps> = ({
 }) => {
     return (
         <Dialog>
-        <DialogTrigger asChild>
-        <Button>
-            <PlusIcon className="mr-2 h-4 w-4" />
-            Add connection
-        </Button>
-        </DialogTrigger>        
-        <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-            <DialogTitle>Add connection</DialogTitle>
-            <DialogDescription>
-            Add profiles from an expert network by filling out the appropriate form
-            </DialogDescription>
-        </DialogHeader>
-
-        <form onSubmit={handleSubmit}>
-            <div className="flex justify-center space-x-4 mb-4">
-            {networks.map((network) => (
-                <Button
-                key={network}
-                type="button"
-                variant="outline"
-                className={`p-2 ${selectedNetwork === network ? 'bg-accent text-accent-foreground' : ''}`}
-                onClick={() => handleNetworkSelect(selectedNetwork === network ? '' : network)} 
-                >
-                <img
-                    src={require(`../assets/expert_network_logos/${network}.png`).default}
-                    alt={`${network} logo`}
-                    width={32}
-                    height={32}
-                />
+            <DialogTrigger asChild>
+                <Button variant="outline">
+                    <PlusIcon className="mr-2 h-4 w-4" />
+                    Add connection
                 </Button>
-            ))}
-            </div>
-            {selectedNetwork === 'AlphaSights' && (
-            <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-right">
-                    Username
-                </Label>
-                <Input
-                    id="username"
-                    value={guidePointUsername}
-                    onChange={(e) => setGuidePointUsername(e.target.value)}
-                    className="col-span-3"
-                />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="password" className="text-right">
-                    Password
-                </Label>
-                <Input
-                    id="password"
-                    type="password"
-                    value={guidePointPassword}
-                    onChange={(e) => setGuidePointPassword(e.target.value)}
-                    className="col-span-3"
-                />
-                </div>
-            </div>
-            )}
-            {selectedNetwork === 'Dialectica' && (
-            <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="mavenToken" className="text-right">
-                    Maven Token
-                </Label>
-                <Input
-                    id="mavenToken"
-                    value={mavenToken}
-                    onChange={(e) => setMavenToken(e.target.value)}
-                    className="col-span-3"
-                />
-                </div>
-            </div>
-            )}
-            {selectedNetwork === 'Guidepoint' && (
-            <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-right">
-                    Username
-                </Label>
-                <Input
-                    id="username"
-                    value={guidePointUsername}
-                    onChange={(e) => setGuidePointUsername(e.target.value)}
-                    className="col-span-3"
-                />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="password" className="text-right">
-                    Password
-                </Label>
-                <Input
-                    id="password"
-                    type="password"
-                    value={guidePointPassword}
-                    onChange={(e) => setGuidePointPassword(e.target.value)}
-                    className="col-span-3"
-                />
-                </div>
-            </div>
-            )}
-            <DialogFooter>
-            <Button type="submit" disabled={!selectedNetwork}>Save changes</Button>
-            </DialogFooter>
-        </form>
-        </DialogContent>
+            </DialogTrigger>        
+            <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                    <DialogTitle>Add connection</DialogTitle>
+                    <DialogDescription>
+                    Add profiles from an expert network by filling out the appropriate form
+                    </DialogDescription>
+                </DialogHeader>
+
+                <form onSubmit={handleSubmit}>
+                    <div className="flex justify-center space-x-4 mb-4">
+                    {networks.map((network) => (
+                        <Button
+                        key={network}
+                        type="button"
+                        variant="outline"
+                        className={`p-2 ${selectedNetwork === network ? 'bg-accent text-accent-foreground' : ''}`}
+                        onClick={() => handleNetworkSelect(selectedNetwork === network ? '' : network)} 
+                        >
+                        <img
+                            src={require(`../assets/expert_network_logos/${network}.png`).default}
+                            alt={`${network} logo`}
+                            width={32}
+                            height={32}
+                        />
+                        </Button>
+                    ))}
+                    </div>
+                    {selectedNetwork === 'AlphaSights' && (
+                    <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="username" className="text-right">
+                            Username
+                        </Label>
+                        <Input
+                            id="username"
+                            value={guidePointUsername}
+                            onChange={(e) => setGuidePointUsername(e.target.value)}
+                            className="col-span-3"
+                        />
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="password" className="text-right">
+                            Password
+                        </Label>
+                        <Input
+                            id="password"
+                            type="password"
+                            value={guidePointPassword}
+                            onChange={(e) => setGuidePointPassword(e.target.value)}
+                            className="col-span-3"
+                        />
+                        </div>
+                    </div>
+                    )}
+                    {selectedNetwork === 'Dialectica' && (
+                    <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="mavenToken" className="text-right">
+                            Maven Token
+                        </Label>
+                        <Input
+                            id="mavenToken"
+                            value={mavenToken}
+                            onChange={(e) => setMavenToken(e.target.value)}
+                            className="col-span-3"
+                        />
+                        </div>
+                    </div>
+                    )}
+                    {selectedNetwork === 'Guidepoint' && (
+                    <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="username" className="text-right">
+                            Username
+                        </Label>
+                        <Input
+                            id="username"
+                            value={guidePointUsername}
+                            onChange={(e) => setGuidePointUsername(e.target.value)}
+                            className="col-span-3"
+                        />
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="password" className="text-right">
+                            Password
+                        </Label>
+                        <Input
+                            id="password"
+                            type="password"
+                            value={guidePointPassword}
+                            onChange={(e) => setGuidePointPassword(e.target.value)}
+                            className="col-span-3"
+                        />
+                        </div>
+                    </div>
+                    )}
+                    <DialogFooter>
+                    <Button type="submit" disabled={!selectedNetwork}>Save changes</Button>
+                    </DialogFooter>
+                </form>
+            </DialogContent>
         </Dialog>
     )
 }
