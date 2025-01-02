@@ -52,44 +52,44 @@ type Expert = {
 }
 
 // Sample data
-const sampleExperts: Expert[] = [
-  {
-    id: 1,
-    name: "John Doe",
-    title: "Senior Software Engineer",
-    company: "Tech Co",
-    network: "AlphaSights",
-    country: "United States",
-    perspective: "Former",
-    availability: "Next week",
-    experience: [
-      { id: "1", title: "Software Engineer", company: "Tech Co", duration: "2018-2023" },
-      { id: "2", title: "Junior Developer", company: "Startup Inc", duration: "2015-2018" }
-    ],
-    availabilityBlocks: [
-      { day: "Monday", slots: ["9 AM - 11 AM", "2 PM - 4 PM"] },
-      { day: "Wednesday", slots: ["10 AM - 12 PM", "3 PM - 5 PM"] }
-    ]
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    title: "Marketing Director",
-    company: "Brand Solutions",
-    network: "Guidepoint",
-    country: "United Kingdom",
-    perspective: "Customer",
-    availability: "This week",
-    experience: [
-      { id: "1", title: "Marketing Director", company: "Brand Solutions", duration: "2020-Present" },
-      { id: "2", title: "Marketing Manager", company: "Global Corp", duration: "2016-2020" }
-    ],
-    availabilityBlocks: [
-      { day: "Tuesday", slots: ["11 AM - 1 PM", "4 PM - 6 PM"] },
-      { day: "Thursday", slots: ["9 AM - 11 AM", "2 PM - 4 PM"] }
-    ]
-  }
-]
+// const sampleExperts: Expert[] = [
+//   {
+//     id: 1,
+//     name: "John Doe",
+//     title: "Senior Software Engineer",
+//     company: "Tech Co",
+//     network: "AlphaSights",
+//     country: "United States",
+//     perspective: "Former",
+//     availability: "Next week",
+//     experience: [
+//       { id: "1", title: "Software Engineer", company: "Tech Co", duration: "2018-2023" },
+//       { id: "2", title: "Junior Developer", company: "Startup Inc", duration: "2015-2018" }
+//     ],
+//     availabilityBlocks: [
+//       { day: "Monday", slots: ["9 AM - 11 AM", "2 PM - 4 PM"] },
+//       { day: "Wednesday", slots: ["10 AM - 12 PM", "3 PM - 5 PM"] }
+//     ]
+//   },
+//   {
+//     id: 2,
+//     name: "Jane Smith",
+//     title: "Marketing Director",
+//     company: "Brand Solutions",
+//     network: "Guidepoint",
+//     country: "United Kingdom",
+//     perspective: "Customer",
+//     availability: "This week",
+//     experience: [
+//       { id: "1", title: "Marketing Director", company: "Brand Solutions", duration: "2020-Present" },
+//       { id: "2", title: "Marketing Manager", company: "Global Corp", duration: "2016-2020" }
+//     ],
+//     availabilityBlocks: [
+//       { day: "Tuesday", slots: ["11 AM - 1 PM", "4 PM - 6 PM"] },
+//       { day: "Thursday", slots: ["9 AM - 11 AM", "2 PM - 4 PM"] }
+//     ]
+//   }
+// ]
 
 type SortConfig = {
   key: keyof Expert;
@@ -97,7 +97,8 @@ type SortConfig = {
 }
 
 export default function ProjectPage() {
-  const [filteredExperts, setFilteredExperts] = useState<Expert[]>(sampleExperts);
+  const [experts, setExperts] = useState<Expert[]>([]);  // Store the raw data here
+  const [filteredExperts, setFilteredExperts] = useState<Expert[]>([]);
   const [expandedRow, setExpandedRow] = useState<number | null>(null)
   const [filters, setFilters] = useState({
     network: [] as string[],
@@ -113,17 +114,17 @@ export default function ProjectPage() {
     perspective: false,
   })
 
-  // useEffect(() => {
-  //   // Fetch the JSON data
-  //   fetch('https://yourusername.github.io/yourrepo/experts.json')  // Replace with the actual URL of the JSON
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setFilteredExperts(data);  // Directly use the JSON data
-  //     });
-  // }, []);
+  useEffect(() => {
+    // Fetch the JSON data
+    fetch('https://shaquilleoatmeal4444.github.io/ExpertConnect/experts.json')  // Replace with the actual URL of the JSON
+      .then((response) => response.json())
+      .then((data) => {
+        setExperts(data);  // Directly use the JSON data
+      });
+  }, []);
 
   useEffect(() => {
-    let result = filteredExperts.filter(expert => 
+    let result = experts.filter(expert => 
       (filters.network.length === 0 || filters.network.includes(expert.network)) &&
       (filters.country.length === 0 || filters.country.includes(expert.country)) &&
       (filters.perspective.length === 0 || filters.perspective.includes(expert.perspective)) &&
@@ -145,7 +146,7 @@ export default function ProjectPage() {
     }
 
     setFilteredExperts(result)
-  }, [filters, filteredExperts, searchTerm, sortConfig])
+  }, [filters, experts, searchTerm, sortConfig])
 
   const toggleRowExpansion = (id: number) => {
     setExpandedRow(expandedRow === id ? null : id)
