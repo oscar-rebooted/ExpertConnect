@@ -23,7 +23,6 @@ import SchedulingDialog from '@/components/SchedulingDialog'
 import SidebarFilter from '@/components/SidebarFilter'
 import AddConnectionDialog from '@/components/AddConnectionDialog'
 
-const networks = ["AlphaSights", "Dialectica", "Guidepoint"]
 const countries = ["United States", "Austria", "Japan", "Italy", "Germany", "France", "Canada", "United Kingdom", "Australia", "Switzerland", "Spain", "Portugal", "Belgium", "Netherlands", "Sweden", "Norway", "Denmark", "Finland", "Iceland", "Ireland", "Malta", "Cyprus", "Luxembourg"]
 const perspectives = ["Customer", "Competitor", "Former"]
 
@@ -86,6 +85,8 @@ export default function ProjectPage() {
       });
   }, []);
 
+  const networks = Array.from(new Set(experts.map(expert => expert.network)))
+
   useEffect(() => {
     let result = experts.filter(expert => 
       (filters.network.length === 0 || filters.network.includes(expert.network)) &&
@@ -141,7 +142,6 @@ export default function ProjectPage() {
     setExpandedFilters(prev => ({ ...prev, [category]: !prev[category] }))
   }
 
-  // Pop-up form logic
   const SortIcon = ({ columnKey }: { columnKey: keyof Expert }) => {
     if (sortConfig.key === columnKey) {
       return sortConfig.direction === 'ascending' ? <ChevronDownIcon className="h-4 w-4 ml-1" /> : <ChevronUpIcon className="h-4 w-4 ml-1" />
@@ -149,10 +149,16 @@ export default function ProjectPage() {
     return null
   }
 
+  // Pop-up form logic
   const [selectedNetwork, setSelectedNetwork] = useState<string | null>(null)
-  const [mavenToken, setMavenToken] = useState('')
+
+  const [dialecticaMavenToken, setDialecticaMavenToken] = useState('')
   const [guidePointUsername, setGuidePointUsername] = useState('')
   const [guidePointPassword, setGuidePointPassword] = useState('')
+  const [alphaSightsUsername, setAlphaSightsUsername] = useState('')
+  const [alphaSightsPassword, setAlphaSightsPassword] = useState('')
+  const [thirdBridgeUsername, setThirdBridgeUsername] = useState('')
+  const [thirdBridgePassword, setThirdBridgePassword] = useState('')
 
   const handleNetworkSelect = (network: string) => {
     setSelectedNetwork(network)
@@ -163,14 +169,14 @@ export default function ProjectPage() {
     // Handle form submission logic here
     console.log('Submitting for network:', selectedNetwork)
     if (selectedNetwork === 'Dialectica') {
-      console.log('Maven Token:', mavenToken)
+      console.log('Maven Token:', dialecticaMavenToken)
     } else if (selectedNetwork === 'Guidepoint') {
       console.log('Username:', guidePointUsername)
       console.log('Password:', guidePointPassword)
     }
     // Reset form fields => not sure I need this
     setSelectedNetwork(null)
-    setMavenToken('')
+    setDialecticaMavenToken('')
     setGuidePointUsername('')
     setGuidePointPassword('')
   }
@@ -227,9 +233,11 @@ export default function ProjectPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+
+            {/* Expert network logos */}
             <div className="flex items-center space-x-4">
               <div className="flex space-x-2">
-                {Array.from(new Set(filteredExperts.map(expert => expert.network))).map((network) => (
+                {networks.map((network) => (
                   <img
                     key={network}
                     src={require(`../assets/expert_network_logos/${network}.png`).default}
@@ -240,18 +248,26 @@ export default function ProjectPage() {
                 ))}
               </div>
 
-              {/* Dialog box for adding connection */}
+              {/* Dialog for adding a connection */}
               <AddConnectionDialog
                 handleSubmit={handleSubmit}
                 networks={networks}
                 selectedNetwork={selectedNetwork}
                 handleNetworkSelect={handleNetworkSelect}
-                mavenToken={mavenToken}
-                setMavenToken={setMavenToken}
+                dialecticaMavenToken={dialecticaMavenToken}
+                setDialecticaMavenToken={setDialecticaMavenToken}
                 guidePointUsername={guidePointUsername}
                 setGuidePointUsername={setGuidePointUsername}
                 guidePointPassword={guidePointPassword}
                 setGuidePointPassword={setGuidePointPassword}
+                alphaSightsUsername={alphaSightsUsername}
+                setAlphaSightsUsername={setAlphaSightsUsername}
+                alphaSightsPassword={alphaSightsPassword}
+                setAlphaSightsPassword={setAlphaSightsPassword}
+                thirdBridgeUsername={thirdBridgeUsername}
+                setThirdBridgeUsername={setThirdBridgeUsername}
+                thirdBridgePassword={thirdBridgePassword}
+                setThirdBridgePassword={setThirdBridgePassword}
               />
             </div>
           </div>

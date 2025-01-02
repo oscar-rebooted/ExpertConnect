@@ -2,9 +2,6 @@ import React from 'react'
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/Dialog'
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
-import {
-    PlusIcon 
-  } from 'lucide-react'
 import { Label } from "@/components/ui/Label"
 
 interface AddConnectionDialogProps {
@@ -12,37 +9,52 @@ interface AddConnectionDialogProps {
     networks: string[]; // Array of available networks
     selectedNetwork: string | null; // Currently selected network
     handleNetworkSelect: (network: string) => void; // Function to handle network selection
-    mavenToken: string; // State for Maven token
-    setMavenToken: React.Dispatch<React.SetStateAction<string>>; // State setter for Maven token
-    guidePointUsername: string; // State for Guidepoint username
-    setGuidePointUsername: React.Dispatch<React.SetStateAction<string>>; // State setter for Guidepoint username
-    guidePointPassword: string; // State for Guidepoint password
-    setGuidePointPassword: React.Dispatch<React.SetStateAction<string>>; // State setter for Guidepoint password
-  }
+    dialecticaMavenToken: string; // State for Maven token
+    setDialecticaMavenToken: React.Dispatch<React.SetStateAction<string>>; // State setter for Maven token
+    guidePointUsername: string; 
+    setGuidePointUsername: React.Dispatch<React.SetStateAction<string>>; 
+    guidePointPassword: string; 
+    setGuidePointPassword: React.Dispatch<React.SetStateAction<string>>;
+    alphaSightsUsername: string; 
+    setAlphaSightsUsername: React.Dispatch<React.SetStateAction<string>>; 
+    alphaSightsPassword: string; 
+    setAlphaSightsPassword: React.Dispatch<React.SetStateAction<string>>;
+    thirdBridgeUsername: string; 
+    setThirdBridgeUsername: React.Dispatch<React.SetStateAction<string>>; 
+    thirdBridgePassword: string; 
+    setThirdBridgePassword: React.Dispatch<React.SetStateAction<string>>;
+}
 
 const AddConnectionDialog: React.FC<AddConnectionDialogProps> = ({
     handleSubmit,
     networks,
     selectedNetwork,
     handleNetworkSelect,
-    mavenToken,
-    setMavenToken,
+    dialecticaMavenToken,
+    setDialecticaMavenToken,
     guidePointUsername,
     setGuidePointUsername,
     guidePointPassword,
-    setGuidePointPassword
+    setGuidePointPassword,
+    alphaSightsUsername,
+    setAlphaSightsUsername,
+    alphaSightsPassword,
+    setAlphaSightsPassword,
+    thirdBridgeUsername,
+    setThirdBridgeUsername, 
+    thirdBridgePassword, 
+    setThirdBridgePassword
 }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant="outline">
-                    <PlusIcon className="mr-2 h-4 w-4" />
-                    Add connection
+                    Manage connections
                 </Button>
             </DialogTrigger>        
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Add connection</DialogTitle>
+                    <DialogTitle>Manage connections</DialogTitle>
                     <DialogDescription>
                     Add profiles from an expert network by filling out the appropriate form
                     </DialogDescription>
@@ -75,8 +87,8 @@ const AddConnectionDialog: React.FC<AddConnectionDialogProps> = ({
                         </Label>
                         <Input
                             id="username"
-                            value={guidePointUsername}
-                            onChange={(e) => setGuidePointUsername(e.target.value)}
+                            value={alphaSightsUsername}
+                            onChange={(e) => setAlphaSightsUsername(e.target.value)}
                             className="col-span-3"
                         />
                         </div>
@@ -87,28 +99,40 @@ const AddConnectionDialog: React.FC<AddConnectionDialogProps> = ({
                         <Input
                             id="password"
                             type="password"
-                            value={guidePointPassword}
-                            onChange={(e) => setGuidePointPassword(e.target.value)}
+                            value={alphaSightsPassword}
+                            onChange={(e) => setAlphaSightsPassword(e.target.value)}
                             className="col-span-3"
                         />
                         </div>
                     </div>
                     )}
-                    {selectedNetwork === 'Dialectica' && (
+                    {selectedNetwork === 'Third Bridge' && (
                     <div className="grid gap-4 py-4">
                         <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="mavenToken" className="text-right">
-                            Maven Token
+                        <Label htmlFor="username" className="text-right">
+                            Username
                         </Label>
                         <Input
-                            id="mavenToken"
-                            value={mavenToken}
-                            onChange={(e) => setMavenToken(e.target.value)}
+                            id="username"
+                            value={thirdBridgeUsername}
+                            onChange={(e) => setThirdBridgeUsername(e.target.value)}
+                            className="col-span-3"
+                        />
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="password" className="text-right">
+                            Password
+                        </Label>
+                        <Input
+                            id="password"
+                            type="password"
+                            value={thirdBridgePassword}
+                            onChange={(e) => setThirdBridgePassword(e.target.value)}
                             className="col-span-3"
                         />
                         </div>
                     </div>
-                    )}
+                    )}                    
                     {selectedNetwork === 'Guidepoint' && (
                     <div className="grid gap-4 py-4">
                         <div className="grid grid-cols-4 items-center gap-4">
@@ -134,10 +158,27 @@ const AddConnectionDialog: React.FC<AddConnectionDialogProps> = ({
                             className="col-span-3"
                         />
                         </div>
-                    </div>
+                    </div>                    
                     )}
+                    {selectedNetwork === 'Dialectica' && (
+                    <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="dialecticaMavenToken" className="text-right">
+                            Maven Token
+                        </Label>
+                        <Input
+                            id="dialecticaMavenToken"
+                            value={dialecticaMavenToken}
+                            onChange={(e) => setDialecticaMavenToken(e.target.value)}
+                            className="col-span-3"
+                        />
+                        </div>
+                    </div>
+                    )}                    
                     <DialogFooter>
-                    <Button type="submit" disabled={!selectedNetwork}>Save changes</Button>
+                    <Button 
+                        type="submit" 
+                        disabled={!selectedNetwork}>Save changes</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
