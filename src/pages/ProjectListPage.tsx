@@ -27,7 +27,6 @@ const timezones = [
 export default function HomePage() {
   const navigate = useNavigate()
   const [defaultProject, setDefaultProject] = useState("1")
-  const [selectedTimezone, setSelectedTimezone] = useState("")
   const [notificationPreference, setNotificationPreference] = useState("desktop")
   const [isPreferencesOpen, setIsPreferencesOpen] = useState(false)
 
@@ -137,19 +136,6 @@ export default function HomePage() {
                     <SelectContent>
                       {projects.map((project) => (
                         <SelectItem key={project.id} value={project.id.toString()}>{project.name}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="timezone" className="text-lg mb-2 block">Display expert availability in timezone</Label>
-                  <Select value={selectedTimezone} onValueChange={setSelectedTimezone}>
-                    <SelectTrigger id="timezone">
-                      <SelectValue placeholder="Select a timezone" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {timezones.map((tz) => (
-                        <SelectItem key={tz} value={tz}>{tz}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>

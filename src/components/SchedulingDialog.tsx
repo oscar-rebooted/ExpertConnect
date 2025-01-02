@@ -9,7 +9,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from "@/components/ui/Dialog"
 import { Calendar } from "@/components/ui/Calendar"
@@ -18,6 +17,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/Popover"
+
+type Experience = {
+  id: string;
+  title: string;
+  company: string;
+  duration: string;
+};
+
+type AvailabilityBlock = {
+  day: string;
+  slots: string[];
+};
 
 type Expert = {
   id: number;
@@ -28,66 +39,25 @@ type Expert = {
   country: string;
   perspective: string;
   availability: string;
-  experience: {
-    id: string;
-    title: string;
-    company: string;
-    duration: string;
-  }[];
-  availabilityBlocks: {
-    day: string;
-    slots: string[];
-  }[];
+  experience: Experience[];
+  availabilityBlocks: AvailabilityBlock[];
 }
 
-const sampleExperts: Expert[] = [
-  {
-    id: 1,
-    name: "John Doe",
-    title: "Senior Software Engineer",
-    company: "Tech Co",
-    network: "AlphaSights",
-    country: "United States",
-    perspective: "Former",
-    availability: "Next week",
-    experience: [
-      { id: "1", title: "Software Engineer", company: "Tech Co", duration: "2018-2023" },
-      { id: "2", title: "Junior Developer", company: "Startup Inc", duration: "2015-2018" }
-    ],
-    availabilityBlocks: [
-      { day: "Monday", slots: ["9 AM - 11 AM", "2 PM - 4 PM"] },
-      { day: "Wednesday", slots: ["10 AM - 12 PM", "3 PM - 5 PM"] }
-    ]
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    title: "Marketing Director",
-    company: "Brand Solutions",
-    network: "Guidepoint",
-    country: "United Kingdom",
-    perspective: "Customer",
-    availability: "This week",
-    experience: [
-      { id: "1", title: "Marketing Director", company: "Brand Solutions", duration: "2020-Present" },
-      { id: "2", title: "Marketing Manager", company: "Global Corp", duration: "2016-2020" }
-    ],
-    availabilityBlocks: [
-      { day: "Tuesday", slots: ["11 AM - 1 PM", "4 PM - 6 PM"] },
-      { day: "Thursday", slots: ["9 AM - 11 AM", "2 PM - 4 PM"] }
-    ]
-  }
-]
+interface SchedulingDialogProps {
+  selectedExpert: Expert | null;
+  isSchedulingDialogOpen: boolean;
+  onClose: () => void;
+}
 
-function SchedulingDialog({ expertId }: { expertId: number }) {
-  const [expert, setExpert] = useState<Expert | undefined>(sampleExperts.find(e => e.id === expertId))
+function SchedulingDialog({ selectedExpert, isSchedulingDialogOpen, onClose }: SchedulingDialogProps) {
+  const expert = selectedExpert
   const [date, setDate] = useState<Date | undefined>(undefined)
   const [startTime, setStartTime] = useState<string>('')
   const [endTime, setEndTime] = useState<string>('')
   const [duration, setDuration] = useState<number | null>(null)
+  
   const [isReviewMode, setIsReviewMode] = useState(false)
   const [isConfirmationMode, setIsConfirmationMode] = useState(false)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const timeSlots = Array.from({ length: 24 * 4 }, (_, i) => {
     const minutes = i * 15
@@ -122,6 +92,7 @@ function SchedulingDialog({ expertId }: { expertId: number }) {
     setDuration(null)
     setIsReviewMode(false)
     setIsConfirmationMode(false)
+    onClose()
   }
 
   const isFormValid = date && startTime && endTime && duration && duration > 0
@@ -130,22 +101,10 @@ function SchedulingDialog({ expertId }: { expertId: number }) {
     return isBefore(startOfDay(new Date()), startOfDay(day))
   }
 
-  if (!expert) {
-    return <div>Expert not found</div>
-  }
+  if (!isSchedulingDialogOpen || !expert) return null;
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={(open) => {
-      setIsDialogOpen(open)
-      if (open) {
-        resetForm()
-      }
-    }}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <CalendarIcon className="mr-2 h-4 w-4" /> Schedule
-        </Button>
-      </DialogTrigger>
+    <Dialog open={isSchedulingDialogOpen} onOpenChange={(open) => !open && resetForm()}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Schedule expert call</DialogTitle>
@@ -250,7 +209,7 @@ function SchedulingDialog({ expertId }: { expertId: number }) {
             <p className="mt-2">Date: {date ? format(date, "PPP") : "Not selected"}</p>
             <p>Time: {startTime} - {endTime}</p>
             <DialogFooter className="mt-4">
-              <Button type="button" onClick={() => setIsDialogOpen(false)}>
+              <Button type="button" onClick={onClose}>
                 Close
               </Button>
             </DialogFooter>

@@ -16,6 +16,7 @@ import {
   ChevronLeftIcon, 
   ChevronDownIcon, 
   ChevronUpIcon, 
+  CalendarIcon,
 } from 'lucide-react'
 import { Link, useFetcher } from 'react-router-dom'
 import SchedulingDialog from '@/components/SchedulingDialog'
@@ -51,62 +52,24 @@ type Expert = {
   availabilityBlocks: AvailabilityBlock[];
 }
 
-// Sample data
-// const sampleExperts: Expert[] = [
-//   {
-//     id: 1,
-//     name: "John Doe",
-//     title: "Senior Software Engineer",
-//     company: "Tech Co",
-//     network: "AlphaSights",
-//     country: "United States",
-//     perspective: "Former",
-//     availability: "Next week",
-//     experience: [
-//       { id: "1", title: "Software Engineer", company: "Tech Co", duration: "2018-2023" },
-//       { id: "2", title: "Junior Developer", company: "Startup Inc", duration: "2015-2018" }
-//     ],
-//     availabilityBlocks: [
-//       { day: "Monday", slots: ["9 AM - 11 AM", "2 PM - 4 PM"] },
-//       { day: "Wednesday", slots: ["10 AM - 12 PM", "3 PM - 5 PM"] }
-//     ]
-//   },
-//   {
-//     id: 2,
-//     name: "Jane Smith",
-//     title: "Marketing Director",
-//     company: "Brand Solutions",
-//     network: "Guidepoint",
-//     country: "United Kingdom",
-//     perspective: "Customer",
-//     availability: "This week",
-//     experience: [
-//       { id: "1", title: "Marketing Director", company: "Brand Solutions", duration: "2020-Present" },
-//       { id: "2", title: "Marketing Manager", company: "Global Corp", duration: "2016-2020" }
-//     ],
-//     availabilityBlocks: [
-//       { day: "Tuesday", slots: ["11 AM - 1 PM", "4 PM - 6 PM"] },
-//       { day: "Thursday", slots: ["9 AM - 11 AM", "2 PM - 4 PM"] }
-//     ]
-//   }
-// ]
-
 type SortConfig = {
   key: keyof Expert;
   direction: 'ascending' | 'descending' | null;
 }
 
 export default function ProjectPage() {
-  const [experts, setExperts] = useState<Expert[]>([]);  // Store the raw data here
-  const [filteredExperts, setFilteredExperts] = useState<Expert[]>([]);
+  const [experts, setExperts] = useState<Expert[]>([]);  // Used for full list of experts
+  const [filteredExperts, setFilteredExperts] = useState<Expert[]>([]); // Used for list of filtered experts
+  const [isSchedulingDialogOpen, setIsSchedulingDialogOpen] = useState(false); 
+  const [selectedExpert, setSelectedExpert] = useState<Expert | null>(null); // Used for SchedulingDialog
   const [expandedRow, setExpandedRow] = useState<number | null>(null)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [sortConfig, setSortConfig] = useState<SortConfig>({ key: 'name', direction: null })
   const [filters, setFilters] = useState({
     network: [] as string[],
     country: [] as string[],
     perspective: [] as string[],
   })
-  const [searchTerm, setSearchTerm] = useState('')
-  const [sortConfig, setSortConfig] = useState<SortConfig>({ key: 'name', direction: null })
   const [isFiltersExpanded, setIsFiltersExpanded] = useState(true)
   const [expandedFilters, setExpandedFilters] = useState({
     network: false,
@@ -178,7 +141,7 @@ export default function ProjectPage() {
     setExpandedFilters(prev => ({ ...prev, [category]: !prev[category] }))
   }
 
-  // Copied in from ChatGPT: pop-up form logic
+  // Pop-up form logic
   const SortIcon = ({ columnKey }: { columnKey: keyof Expert }) => {
     if (sortConfig.key === columnKey) {
       return sortConfig.direction === 'ascending' ? <ChevronDownIcon className="h-4 w-4 ml-1" /> : <ChevronUpIcon className="h-4 w-4 ml-1" />
@@ -212,18 +175,27 @@ export default function ProjectPage() {
     setGuidePointPassword('')
   }
 
+  // Scheduling dialog logic and state mgmt here
+  const handleOpenSchedulingDialog = (expert: Expert) => {
+    setSelectedExpert(expert);
+    setIsSchedulingDialogOpen(true);
+  };
+
+  const handleCloseSchedulingDialog = () => {
+    setSelectedExpert(null);
+    setIsSchedulingDialogOpen(false);
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gray-100 dark:bg-gray-900">
       {/* Top bar */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <Link to="/project-list" className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
-              <ChevronLeftIcon className="mr-2 h-4 w-4" />
-              Back to Project List
-            </Link>
-            <h1 className="text-lg font-semibold text-gray-900 dark:text-white">Business services CDD</h1>
-          </div>
+      <div className="bg-white dark:bg-gray-800 shadow-sm sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center py-4">
+          <Link to="/project-list" className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+            <ChevronLeftIcon className="mr-2 h-4 w-4" />
+            Back to Project List
+          </Link>
+          <h1 className="text-lg font-semibold text-gray-900 dark:text-white">Business services CDD</h1>
         </div>
       </div>
 
@@ -244,9 +216,10 @@ export default function ProjectPage() {
           handleFilterChange={handleFilterChange}
         />     
 
-        {/* Search experts input bar */}
         <div className="flex-1 p-8 overflow-auto">
           <div className="flex justify-between items-center mb-6">
+    
+            {/* Search experts input bar */}
             <Input
               type="search"
               placeholder="Search experts..."
@@ -300,7 +273,7 @@ export default function ProjectPage() {
                       </div>
                     </TableHead>
                   ))}
-+                </TableRow>
+                </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredExperts.map((expert) => (
@@ -317,35 +290,16 @@ export default function ProjectPage() {
                       <TableCell>{expert.country}</TableCell>
                       <TableCell>{expert.perspective}</TableCell>
                       <TableCell>
-                        <SchedulingDialog expertId={expert.id}>
-                        </SchedulingDialog>
-                        {/* <Dialog>
-                          <DialogTrigger>
-                            <Button variant="outline" size="sm">
-                              <CalendarIcon className="mr-2 h-4 w-4" /> Schedule
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent>
-                            <DialogHeader>
-                              <DialogTitle>Schedule expert call</DialogTitle>
-                            </DialogHeader>
-                            <form>
-                              <div className="grid gap-4 py-4">
-                                <div className="grid grid-cols-4 items-center gap-4">
-                                  <Label htmlFor="expertName" className="text-right">
-                                    
-                                  </Label>
-                                  <Input
-                                    id="mavenToken"
-                                    value={mavenToken}
-                                    onChange={(e) => setMavenToken(e.target.value)}
-                                    className="col-span-3"
-                                  />
-                                </div>
-                              </div>
-                            </form>
-                          </DialogContent>
-                        </Dialog> */}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent row expansion on button click
+                            handleOpenSchedulingDialog(expert);
+                          }}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" /> Schedule
+                        </Button>
                       </TableCell>
                     </TableRow>
                     {expandedRow === expert.id && (
@@ -398,6 +352,11 @@ export default function ProjectPage() {
                 ))}
               </TableBody>
             </Table>
+            <SchedulingDialog
+              selectedExpert={selectedExpert}
+              isSchedulingDialogOpen={isSchedulingDialogOpen}
+              onClose={handleCloseSchedulingDialog}
+            />
           </div>
         </div>
       </div>

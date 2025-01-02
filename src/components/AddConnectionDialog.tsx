@@ -67,6 +67,33 @@ const AddConnectionDialog: React.FC<AddConnectionDialogProps> = ({
                 </Button>
             ))}
             </div>
+            {selectedNetwork === 'AlphaSights' && (
+            <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="username" className="text-right">
+                    Username
+                </Label>
+                <Input
+                    id="username"
+                    value={guidePointUsername}
+                    onChange={(e) => setGuidePointUsername(e.target.value)}
+                    className="col-span-3"
+                />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="password" className="text-right">
+                    Password
+                </Label>
+                <Input
+                    id="password"
+                    type="password"
+                    value={guidePointPassword}
+                    onChange={(e) => setGuidePointPassword(e.target.value)}
+                    className="col-span-3"
+                />
+                </div>
+            </div>
+            )}
             {selectedNetwork === 'Dialectica' && (
             <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
