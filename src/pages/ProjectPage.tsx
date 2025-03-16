@@ -78,7 +78,8 @@ export default function ProjectPage() {
 
   useEffect(() => {
     // Fetch the JSON data
-    fetch('https://shaquilleoatmeal4444.github.io/ExpertConnect/experts.json')  // Replace with the actual URL of the JSON
+    const baseUrl = process.env.PUBLIC_URL || "";  
+    fetch(`${baseUrl}/experts.json`)
       .then((response) => response.json())
       .then((data) => {
         setExperts(data);  // Directly use the JSON data

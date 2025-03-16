@@ -10,7 +10,6 @@
     "electron-builder": "electron-builder",
     "start:dev": "webpack serve --config webpack.config.js --mode development",
     "build": "webpack --config webpack.config.js --mode production",
-    "predeploy": "npm run build",
     "postbuild": "copy dummy_data\\experts.json dist\\experts.json",
     "deploy": "gh-pages -d dist"
   },

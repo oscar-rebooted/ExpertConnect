@@ -1,6 +1,6 @@
 ## Link
 You can view the project at:
-https://shaquilleoatmeal4444.github.io/ExpertConnect/ 
+https://oscar-rebooted.github.io/ExpertConnect/ 
 
 ## What is this repo
 ExpertConnect is a demo web application I built to address a specific pain point identified in my management consulting role. It features a React frontend with dummy data and is designed to showcase the potential for streamlining the process of booking and managing expert calls.
