@@ -1,5 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const dotenv = require('dotenv');
+const webpack = require('webpack');
+dotenv.config();
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
@@ -63,6 +66,9 @@ module.exports = (env, argv) => {
         template: './public/index.html',
         inject: "body"
       }),
+      new webpack.DefinePlugin({
+        'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
+      })
     ],  
   };
 };

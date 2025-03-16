@@ -3,10 +3,10 @@ You can view the project at:
 https://oscar-rebooted.github.io/ExpertConnect/ 
 
 ## What is this repo
-ExpertConnect is a demo web application I built to address a specific pain point identified in my management consulting role. It features a React frontend with dummy data and is designed to showcase the potential for streamlining the process of booking and managing expert calls.
+ExpertConnect is a demo web application I built to address a specific pain point identified at BCG. It features a React frontend with dummy data and is designed to showcase the potential for streamlining the process of booking and managing expert calls.
 
 ## Why this repo
-As part of commercial due diligence, junior team members typically spend 30-50% of their time coordinating expert calls, often through time-consuming email exchanges with expert networks. This project was my initiative to demonstrate how a web app could simplify and enhance this process.
+As part of a commercial due diligence, junior team members typically spend 30-50% of their time coordinating expert calls, often through time-consuming email exchanges with expert networks. This project was my initiative to demonstrate how a web app could simplify and enhance this process.
 
 The Managing Director appreciated the concept and encouraged me to explore further development. While I paused work on the project after learning my company had allocated significant resources to a similar tool, this experience was invaluable for learning about frontend development.
 

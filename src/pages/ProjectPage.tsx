@@ -78,9 +78,8 @@ export default function ProjectPage() {
 
   useEffect(() => {
     // Fetch the JSON data
-    const baseUrl = process.env.PUBLIC_URL || "";  
-    fetch(`${baseUrl}/experts.json`)
-      .then((response) => response.json())
+    fetch('https://oscar-rebooted.github.io/ExpertConnect/experts.json')
+    .then((response) => response.json())
       .then((data) => {
         setExperts(data);  // Directly use the JSON data
       });
